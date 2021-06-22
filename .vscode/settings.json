@@ -1,3 +1,4 @@
+
 {
 	"[typescript]": {
 		"editor.defaultFormatter": "dbaeumer.vscode-eslint",
@@ -6,6 +7,9 @@
 	"[typescriptreact]": {
 		"editor.defaultFormatter": "dbaeumer.vscode-eslint",
 		"editor.formatOnSave": true
+	},
+	"editor.codeActionsOnSave": {
+		"source.organizeImports": true
 	},
 	"eslint.run": "onType",
 	"eslint.format.enable": true,
