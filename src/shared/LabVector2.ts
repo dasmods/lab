@@ -6,4 +6,8 @@ export class LabVector2 {
 		this.x = x;
 		this.y = y;
 	}
+
+	toRbx(): Vector2 {
+		return new Vector2(this.x, this.y);
+	}
 }
