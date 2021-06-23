@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-this-alias */
 export class LabVector2 {
 	x: number;
 	y: number;
