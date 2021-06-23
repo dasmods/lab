@@ -1,3 +1,5 @@
+import { t } from "@rbxts/t";
+
 /* eslint-disable @typescript-eslint/no-this-alias */
 export class LabVector2 {
 	x: number;
@@ -32,7 +34,29 @@ export class LabVector2 {
 		return new LabVector2(x, y);
 	}
 
-	mul(vector: LabVector2): LabVector2 {}
+	mul(value: LabVector2 | number): LabVector2 {
+		return t.number(value) ? this.scalarProduct(value) : this.dotProduct(value);
+	}
+
+	private scalarProduct(scalar: number): LabVector2 {
+		const v = this;
+
+		const x = v.x * scalar;
+		const y = v.y * scalar;
+
+		return new LabVector2(x, y);
+	}
+
+	/**
+	 * The dot product of 2 vectors is the magnitude of one times
+	 * the project of the second onto the first.
+	 * https://physics.info/vector-multiplication/
+	 */
+	private dotProduct(vector: LabVector2): LabVector2 {
+		const v1 = this;
+		const v2 = vector;
+		return this;
+	}
 
 	magnitude(): number {
 		const v = this;
@@ -44,5 +68,7 @@ export class LabVector2 {
 	 * the vector, we divide the vector by its magnitude.
 	 * https://byjus.com/maths/unit-vector/
 	 */
-	unit(): LabVector2 {}
+	unit(): LabVector2 {
+		return this;
+	}
 }
