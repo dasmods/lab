@@ -1,42 +1,71 @@
 import { Workspace } from "@rbxts/services";
-import { t } from "@rbxts/t";
-import { LabVector2 } from "shared/LabVector2";
 
-type Vector2RenderOpts = {
-	z?: number;
-	color?: Color3;
+export enum RenderType {
+	Vector2 = "Vector2",
+}
+
+type Vector2Params = {
+	type: RenderType.Vector2;
+	vector2: Vector2;
+	offset: Vector3;
+	color: Color3;
+	text: string;
 };
 
-export const RED = new Color3(1, 0, 0);
-export const GREEN = new Color3(0, 1, 0);
-export const BLUE = new Color3(0, 0, 1);
+export type RenderParams = Vector2Params;
 
-const PART = new Instance("Part");
-PART.Color = RED;
-PART.CanCollide = false;
-PART.Anchored = true;
+export const Colors = {
+	RED: new Color3(1, 0, 0),
+	GREEN: new Color3(0, 1, 0),
+	BLUE: new Color3(0, 0, 1),
+};
 
-const createPart = () => PART.Clone();
+export const render = (params: RenderParams) => {
+	let part: Part;
 
-const render = (part: Part) => {
+	switch (params.type) {
+		case RenderType.Vector2:
+			part = createVector2Part(params);
+			break;
+		default:
+			error(`unexpected type: ${params.type}`);
+	}
+
 	part.Parent = Workspace;
 };
 
-export const renderVector2 = (vector: Vector2, opts: Vector2RenderOpts = {}) => {
-	const part = createPart();
-	const v = vector;
-	const color = opts.color || RED;
-	const z = t.number(opts.z) ? opts.z : 0;
-
-	part.Color = color;
-	part.Size = new Vector3(0.1, 0.1, v.Magnitude);
-	part.CFrame = CFrame.lookAt(new Vector3(0, 0, z), new Vector3(v.X, v.Y, z)).ToWorldSpace(
-		new CFrame(0, 0, -v.Magnitude / 2),
-	);
-
-	render(part);
+const createPart = () => {
+	const part = new Instance("Part");
+	part.CanCollide = false;
+	part.Anchored = true;
+	return part;
 };
 
-export const renderLabVector2 = (vector: LabVector2, opts: Vector2RenderOpts = {}) => {
-	renderVector2(vector.toRbx(), opts);
+const createVector2Part = (params: Vector2Params) => {
+	const { vector2, offset, color, text } = params;
+
+	const magnitude = vector2.Magnitude;
+	const p1 = offset;
+	const p2 = new Vector3(vector2.X, vector2.Y, 0).add(offset);
+
+	const part = createPart();
+	part.Color = color;
+	part.Size = new Vector3(0.1, 0.1, magnitude);
+	part.CFrame = CFrame.lookAt(p1, p2).ToWorldSpace(new CFrame(0, 0, -magnitude / 2));
+
+	const billboard = new Instance("BillboardGui", part);
+	billboard.Adornee = part;
+	billboard.Enabled = true;
+	billboard.Size = new UDim2(1, 5, 1, 1);
+	billboard.AlwaysOnTop = true;
+
+	const textLabel = new Instance("TextLabel", billboard);
+	textLabel.Text = text;
+	textLabel.Visible = true;
+	textLabel.Size = new UDim2(1, 5, 1, 1);
+	textLabel.BackgroundTransparency = 1;
+	textLabel.TextColor3 = color;
+	textLabel.TextXAlignment = Enum.TextXAlignment.Right;
+
+	return part;
 };
