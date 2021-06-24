@@ -1,3 +1,5 @@
+import { t } from "@rbxts/t";
+
 /* eslint-disable @typescript-eslint/no-this-alias */
 export class LabVector2 {
 	static fromRbx(vector: Vector2): LabVector2 {
@@ -53,7 +55,20 @@ export class LabVector2 {
 		return new LabVector2(x, y);
 	}
 
-	div(vector: LabVector2): LabVector2 {
+	div(value: LabVector2 | number): LabVector2 {
+		return t.number(value) ? this.divNumber(value) : this.divVector(value);
+	}
+
+	private divNumber(n: number): LabVector2 {
+		const v = this;
+
+		const x = v.x / n;
+		const y = v.y / n;
+
+		return new LabVector2(x, y);
+	}
+
+	private divVector(vector: LabVector2): LabVector2 {
 		const v1 = this;
 		const v2 = vector;
 
@@ -95,6 +110,6 @@ export class LabVector2 {
 	 * https://byjus.com/maths/unit-vector/
 	 */
 	unit(): LabVector2 {
-		return this;
+		return this.div(this.magnitude());
 	}
 }
