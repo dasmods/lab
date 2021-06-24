@@ -38,6 +38,7 @@ const createPart = () => {
 	const part = new Instance("Part");
 	part.CanCollide = false;
 	part.Anchored = true;
+	part.Transparency = 0.2;
 	return part;
 };
 
