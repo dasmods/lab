@@ -53,6 +53,16 @@ export class LabVector2 {
 		return new LabVector2(x, y);
 	}
 
+	div(vector: LabVector2): LabVector2 {
+		const v1 = this;
+		const v2 = vector;
+
+		const x = v1.x / v2.x;
+		const y = v1.y / v2.y;
+
+		return new LabVector2(x, y);
+	}
+
 	/**
 	 * The dot product of 2 vectors is the magnitude of one times
 	 * the project of the second onto the first.

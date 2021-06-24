@@ -5,20 +5,20 @@ import { LabVector2 } from "shared/LabVector2";
 export = () => {
 	describe("constructor", () => {
 		it("creates a vector with x and y", () => {
-			const v = new LabVector2(1, 2);
+			const l = new LabVector2(1, 2);
 
-			expect(v.x).equal(1);
-			expect(v.y).equal(2);
+			expect(l.x).to.be.equal(1);
+			expect(l.y).to.be.equal(2);
 		});
 	});
 
 	describe("toRbx", () => {
 		it("creates a Vector2 instance", () => {
-			const lv = new LabVector2(1, 1);
-			const rv = lv.toRbx();
+			const l = new LabVector2(1, 1);
+			const r = l.toRbx();
 
-			expect(lv.x).equal(rv.X);
-			expect(lv.y).equal(rv.Y);
+			expect(l.x).to.be.equal(r.X);
+			expect(l.y).to.be.equal(r.Y);
 		});
 	});
 
@@ -29,21 +29,21 @@ export = () => {
 
 			const v3 = v1.add(v2);
 
-			expect(v3.x).equal(3);
-			expect(v3.y).equal(4);
+			expect(v3.x).to.be.equal(3);
+			expect(v3.y).to.be.equal(4);
 		});
 
 		it("mimics rbx", () => {
-			const lv1 = new LabVector2(4, 4);
-			const lv2 = new LabVector2(1, 2);
-			const lv3 = lv1.add(lv2);
+			const l1 = new LabVector2(4, 4);
+			const l2 = new LabVector2(1, 2);
+			const r1 = new Vector2(4, 4);
+			const r2 = new Vector2(1, 2);
 
-			const rv1 = new Vector2(4, 4);
-			const rv2 = new Vector2(1, 2);
-			const rv3 = rv1.add(rv2);
+			const l3 = l1.add(l2);
+			const r3 = r1.add(r2);
 
-			expect(lv3.x).equal(rv3.X);
-			expect(lv3.y).equal(rv3.Y);
+			expect(l3.x).to.be.equal(r3.X);
+			expect(l3.y).to.be.equal(r3.Y);
 		});
 	});
 
@@ -54,21 +54,21 @@ export = () => {
 
 			const v3 = v1.mul(v2);
 
-			expect(v3.x).equal(2);
-			expect(v3.y).equal(6);
+			expect(v3.x).to.be.equal(2);
+			expect(v3.y).to.be.equal(6);
 		});
 
 		it("mimics rbx", () => {
 			const l1 = new LabVector2(1, 2);
 			const l2 = new LabVector2(2, 3);
-			const l3 = l1.mul(l2);
-
 			const r1 = new Vector2(1, 2);
 			const r2 = new Vector2(2, 3);
+
+			const l3 = l1.mul(l2);
 			const r3 = r1.mul(r2);
 
-			expect(l3.x).equal(r3.X);
-			expect(l3.y).equal(r3.Y);
+			expect(l3.x).to.be.equal(r3.X);
+			expect(l3.y).to.be.equal(r3.Y);
 		});
 	});
 
@@ -76,13 +76,13 @@ export = () => {
 		it("mimics rbx", () => {
 			const l1 = new LabVector2(1, 2);
 			const l2 = new LabVector2(2, 3);
-			const lDotProduct = l1.dot(l2);
-
 			const r1 = new Vector2(1, 2);
 			const r2 = new Vector2(2, 3);
-			const rDotProduct = r1.Dot(r2);
 
-			expect(lDotProduct).equal(rDotProduct);
+			const l3 = l1.dot(l2);
+			const r3 = r1.Dot(r2);
+
+			expect(l3).to.be.equal(r3);
 		});
 	});
 
@@ -90,13 +90,28 @@ export = () => {
 		it("mimics rbx", () => {
 			const l1 = new LabVector2(1, 2);
 			const l2 = new LabVector2(2, 3);
-			const lCrossProduct = l1.cross(l2);
-
 			const r1 = new Vector2(1, 2);
 			const r2 = new Vector2(2, 3);
-			const rCrossProduct = r1.Cross(r2);
 
-			expect(lCrossProduct).equal(rCrossProduct);
+			const l3 = l1.cross(l2);
+			const r3 = r1.Cross(r2);
+
+			expect(l3).to.be.equal(r3);
+		});
+	});
+
+	describe("div", () => {
+		it("mimics, rbx", () => {
+			const l1 = new LabVector2(1, 2);
+			const l2 = new LabVector2(2, 3);
+			const r1 = l1.toRbx();
+			const r2 = l2.toRbx();
+
+			const l3 = l1.div(l2);
+			const r3 = r1.div(r2);
+
+			expect(l3.x).to.be.near(r3.X, 0.01);
+			expect(l3.y).to.be.near(r3.Y, 0.01);
 		});
 	});
 };
