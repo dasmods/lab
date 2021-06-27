@@ -18,6 +18,7 @@ export const Colors = {
 	RED: new Color3(1, 0, 0),
 	GREEN: new Color3(0, 1, 0),
 	BLUE: new Color3(0, 0, 1),
+	WHITE: new Color3(1, 1, 1),
 };
 
 export const render = (params: RenderParams) => {
@@ -38,7 +39,7 @@ const createPart = () => {
 	const part = new Instance("Part");
 	part.CanCollide = false;
 	part.Anchored = true;
-	part.Transparency = 0.2;
+	part.Transparency = 0.4;
 	return part;
 };
 
