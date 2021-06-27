@@ -15,8 +15,8 @@ const renderGroupFactory = (initialOffset: Vector3, deltaOffset: Vector3) => {
 
 const nextRenderGroup = renderGroupFactory(new Vector3(0, 5, 10), new Vector3(10, 0, 0));
 
-const A = new Vector3(1, 5, 4);
-const B = new Vector3(3, -2, 3);
+const A = new Vector3(1, 1, 1);
+const B = new Vector3(1, -1, 1);
 
 const r1 = nextRenderGroup();
 r1("A", A, Colors.RED);
@@ -32,3 +32,8 @@ r2("A-B", A.sub(B), Colors.GREEN);
 const r3 = nextRenderGroup();
 r3("A", A, Colors.WHITE);
 r3("A unit", A.Unit, Colors.RED);
+
+const r4 = nextRenderGroup();
+r4("A", A, Colors.RED);
+r4("B", B, Colors.BLUE);
+r4("A.Cross(B)", A.Cross(B), Colors.WHITE);
