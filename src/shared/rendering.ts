@@ -67,6 +67,7 @@ const createVector2Part = (params: Vector2Params) => {
 	textLabel.BackgroundTransparency = 1;
 	textLabel.TextColor3 = color;
 	textLabel.TextXAlignment = Enum.TextXAlignment.Right;
+	textLabel.TextSize = 20;
 
 	return part;
 };
