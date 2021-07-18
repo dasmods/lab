@@ -130,35 +130,10 @@ const createVector3Part = (params: Vector3Params) => {
 const createCFramePart = (params: CFrameParams) => {
 	const { cframe, offset, color, text } = params;
 
-	const components = cframe.GetComponents();
-	// R00, R01, R02, R10, R11, R12, R20, R21, R22;
-	const r00 = components[3];
-	const r01 = components[4];
-	const r02 = components[5];
-	const r10 = components[6];
-	const r11 = components[7];
-	const r12 = components[8];
-	const r20 = components[9];
-	const r21 = components[10];
-	const r22 = components[11];
-
 	const part = createPart();
 	part.Color = color;
 	part.Size = new Vector3(3, 3, 3);
-	part.CFrame = new CFrame(
-		cframe.X + offset.X,
-		cframe.Y + offset.Y,
-		cframe.Z + offset.Z,
-		r00,
-		r01,
-		r02,
-		r10,
-		r11,
-		r12,
-		r20,
-		r21,
-		r22,
-	);
+	part.CFrame = cframe.add(offset);
 
 	const decal = new Instance("Decal", part);
 	decal.Texture = "rbxassetid://7116928512";
